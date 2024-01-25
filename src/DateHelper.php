@@ -70,14 +70,13 @@ class DateHelper
                 $start->startOfYear();
                 break;
             default:
-                //Ex. 2020-06-15 to 2023-06-15
                 $parsed = explode(' to ', $value);
                 if (count($parsed) == 1) {
-                    $start = Carbon::createFromFormat('Y-m-d', $value)->setTime(0, 0, 0);
+                    $start = Carbon::make($value)->setTime(0, 0, 0);
                     $end = $start->clone()->setTime(23, 59, 59);
                 } elseif (count($parsed) == 2) {
-                    $start = Carbon::createFromFormat('Y-m-d', $parsed[0])->setTime(0, 0, 0);
-                    $end = Carbon::createFromFormat('Y-m-d', $parsed[1])->setTime(23, 59, 59);
+                    $start = Carbon::make($parsed[0])->setTime(0, 0, 0);
+                    $end = Carbon::make($parsed[1])->setTime(23, 59, 59);
                 }
 
         }
