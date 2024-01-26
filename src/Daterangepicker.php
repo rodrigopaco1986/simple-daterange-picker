@@ -19,37 +19,18 @@ class Daterangepicker extends Filter
     ) {
     }
 
-    /**
-     * The filter's component.
-     *
-     * @var string
-     */
     public $component = 'daterangepicker';
 
-    /**
-     * Apply the filter to the given query.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param mixed $value
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
+
     public function apply(NovaRequest $request, $query, $value)
     {
         [$start, $end] = Helper::getParsedDatesGroupedRanges($value);
 
         if ($start && $end) {
-            return $query->whereBetween($this->column, [$start, $end])
-                ->orderBy('id', 'desc');
+            $query->whereBetween($this->column, [$start, $end]);
         }
-
-        return $query;
     }
 
-    /**
-     * Get the filter's available options.
-     *
-     * @return array
-     */
     public function options(NovaRequest $request)
     {
         if (empty($this->periods)) {
