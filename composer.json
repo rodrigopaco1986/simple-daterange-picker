@@ -1,5 +1,5 @@
 {
-    "name": "rpj/daterangepicker",
+    "name": "cybetic/daterangepicker",
     "description": "A simple Date Range filter for Laravel Nova 4.",
     "keywords": [
         "laravel",
