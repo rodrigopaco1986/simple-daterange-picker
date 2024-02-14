@@ -22,6 +22,20 @@ In your Nova resource, just add DateRangeFilter class in the filters function, a
     }
 ```
 
+Additionally we added a custom date range picker that allows user to specify the column to order by with its value and as well as in the case of a joined table to prevent ambiguous mysql error, you can specify the actual table name to know the actual column you are referring to.
+this takes, the column to check the date range picker and as well as the column to order by with the asc/desc direction
+
+```php
+ use Rpj\Daterangepicker\CustomDaterangepicker;
+
+ public function filters(Request $request)
+    {
+        return [
+            new CustomDaterangepicker('users.created_at', 'users.id', 'asc'),
+        ];
+    }
+```
+
 Additionally, you can pass a string with default date range to use in the component. If no value is passed, TODAY value is set as default.
 
 ```php
