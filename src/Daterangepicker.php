@@ -11,6 +11,8 @@ class Daterangepicker extends Filter
     public function __construct(
         private string $column,
         private string $default = Helper::TODAY,
+        private string $orderByColumn = 'id',
+        private string $orderByDir = 'asc',
     ) {
     }
 
@@ -34,7 +36,7 @@ class Daterangepicker extends Filter
 
         if ($start && $end) {
             return $query->whereBetween($this->column, [$start, $end])
-                ->orderBy('id', 'desc');
+                ->orderBy($this->orderByColumn, $this->orderByDir);
         }
 
         return $query;
