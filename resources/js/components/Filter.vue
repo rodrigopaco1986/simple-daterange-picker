@@ -111,21 +111,17 @@ export default {
         return e.preventDefault();
     },
     initDateRange: function() {
-      const idSelector = ('#' + this.id)
       const ref = this
+      const idSelector = ('#' + this.id)
+      const minDate = ref.filter.minDate
+      const maxDate = ref.filter.maxDate
 
       $(idSelector).daterangepicker({
         "startDate": ref.startDate,
 			  "endDate": ref.endDate,
-        "maxDate": moment(),
-        ranges: {
-          'Today': [moment(), moment()],
-          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-          'This Month': [moment().startOf('month'), moment().endOf('month')],
-          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-          },
+        "minDate": (minDate ? moment(minDate) : null),
+        "maxDate": (maxDate ? moment(maxDate) : null),
+        "ranges": ref.parseRanges(),
       }, function(start, end, label) {
         if (start && end) {
           ref.currentStartDate = start
@@ -164,6 +160,16 @@ export default {
 
       this.currentStartDate = startDate
       this.currentEndDate = endDate
+    },
+    parseRanges: function() {
+      const ranges = this.filter.options;
+      let parsedRanges = {};
+
+      for(let i=0; i<ranges.length; i++) {
+        parsedRanges[ranges[i]['label']] = [moment(ranges[i][0]), moment(ranges[i][1])]
+      }
+
+      return parsedRanges;
     }
   },
 
