@@ -6,7 +6,8 @@
         <input type="text" class="hidden">
         <input
           :id="id"
-          class="block w-full form-control form-control-sm form-input form-input-bordered bg-gray-100 text-sm px-1"
+          class="block w-full form-control form-control-sm form-input form-input-bordered text-sm px-1"
+          :class="{ 'text-white': (value == null) }"
           type="text"
           :dusk="`${filter.name}-daterange-filter`"
           name="daterangefilter"
@@ -61,11 +62,11 @@ export default {
   }),
 
   created() {
+    this.parseDates()
+
     this.debouncedHandleChange = debounce(() => this.handleChange(), 500)
 
     this.setCurrentFilterValue()
-
-    this.parseDates()
   },
 
   mounted() {
@@ -135,7 +136,7 @@ export default {
       })
     },
     clearFilter: function () {
-      this.value = null;
+      this.value = null
     },
     generateId: function () {
       return Math.random().toString(36).substring(2) +
@@ -145,7 +146,7 @@ export default {
       const dateRange = this.filter.currentValue
       let startDate = moment()
       let endDate = moment()
-      
+
       if (dateRange) {
         const parsedDateRange = dateRange.split(' to ')
         if (parsedDateRange.length == 2) {
