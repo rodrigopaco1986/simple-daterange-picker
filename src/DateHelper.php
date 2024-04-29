@@ -7,6 +7,8 @@ use Illuminate\Support\Carbon;
 
 class DateHelper
 {
+    const ALL = 'All';
+
     const TODAY = 'Today';
 
     const YESTERDAY = 'Yesterday';
@@ -44,6 +46,9 @@ class DateHelper
 
     public static function getParsedDatesGroupedRanges($value): array
     {
+        if ($value == self::ALL)
+            return [null, null];
+
         $start = Carbon::now();
         $end = $start->clone();
 

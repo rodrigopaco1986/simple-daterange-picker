@@ -4,6 +4,7 @@ namespace Rpj\Daterangepicker;
 
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Laravel\Nova\Filters\Filter;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Rpj\Daterangepicker\DateHelper as Helper;
@@ -38,7 +39,7 @@ class Daterangepicker extends Filter
      * @param  mixed  $value
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function apply(NovaRequest $request, $query, $value)
+    public function apply(NovaRequest $request, $query, $value): Builder
     {
         [$start, $end] = Helper::getParsedDatesGroupedRanges($value);
 
@@ -55,7 +56,7 @@ class Daterangepicker extends Filter
      *
      * @return array
      */
-    public function options(NovaRequest $request)
+    public function options(NovaRequest $request): array|null
     {
         if (!$this->ranges) {
             $this->setRanges(Helper::defaultRanges());
@@ -69,11 +70,15 @@ class Daterangepicker extends Filter
      *
      * @return array|mixed
      */
-    public function default()
+    public function default(): string|null
     {
         [$start, $end] = Helper::getParsedDatesGroupedRanges($this->default);
 
-        return $start->format('Y-m-d').' to '.$end->format('Y-m-d');
+        if ($start && $end) {
+            return $start->format('Y-m-d').' to '.$end->format('Y-m-d');
+        }
+
+        return null;
     }
 
     public function setMinDate(Carbon $minDate): self

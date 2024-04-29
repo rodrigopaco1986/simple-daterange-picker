@@ -91,7 +91,11 @@ export default {
 
   methods: {
     setCurrentFilterValue() {
-      this.value = this.filter.currentValue
+      if (this.filter.currentValue) {
+        this.value = this.filter.currentValue
+      } else {
+        this.value = null
+      }
     },
     handleChange() {
       this.$store.commit(`${this.resourceName}/updateFilterState`, {
