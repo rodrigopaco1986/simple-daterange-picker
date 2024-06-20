@@ -132,4 +132,14 @@ class Daterangepicker extends Filter
             'maxDate' => $this?->maxDate?->format('Y-m-d'),
         ]);
     }
+
+    /**
+     * Get the key for the filter.
+     *
+     * @return string
+     */
+    public function key()
+    {
+        return $this->column;
+    }
 }
