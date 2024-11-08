@@ -9,7 +9,7 @@ Run this command in your nova project:
 
 ### How to use
 
-In your Nova resource, just add DateRangeFilter class in the filters function, and include the column that you would like to use as the one to filter the resource.
+In your Nova resource, just add DateRangeFilter class in the filters function, and include the column(s) that you would like to use as filter the resource.
 
 ```php
  use Rpj\Daterangepicker\Daterangepicker;
@@ -18,6 +18,19 @@ In your Nova resource, just add DateRangeFilter class in the filters function, a
     {
         return [
             new Daterangepicker('created_at'),
+        ];
+    }
+```
+
+Column name can be a string or an array of strings with two items. Otherwise an exception will be fired.
+
+```php
+ use Rpj\Daterangepicker\Daterangepicker;
+
+ public function filters(Request $request)
+    {
+        return [
+            new Daterangepicker(['created_at', 'updated_at']),
         ];
     }
 ```

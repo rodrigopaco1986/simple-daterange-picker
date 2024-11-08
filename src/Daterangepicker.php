@@ -16,7 +16,7 @@ class Daterangepicker extends Filter
     private array|null $ranges = null;
 
     public function __construct(
-        private string $column,
+        private string | array $column,
         private string $default = Helper::TODAY,
         private string $orderByColumn = 'id',
         private string $orderByDir = 'asc',
@@ -44,8 +44,18 @@ class Daterangepicker extends Filter
         [$start, $end] = Helper::getParsedDatesGroupedRanges($value);
 
         if ($start && $end) {
-            return $query->whereBetween($this->column, [$start, $end])
-                ->orderBy($this->orderByColumn, $this->orderByDir);
+            if (is_string($this->column)) {
+                return $query
+                    ->whereBetween($this->column, [$start, $end])
+                    ->orderBy($this->orderByColumn, $this->orderByDir);
+            } elseif (is_array($this->column) && count($this->column) == 2) {
+                return $query
+                    ->where($this->column[0], '>=', $start)
+                    ->where($this->column[1], '<=', $end)
+                    ->orderBy($this->orderByColumn, $this->orderByDir);
+            } else {
+                throw new Exception('Date range picker: column name value must be an string or array with two string items.');
+            }
         }
 
         return $query;
