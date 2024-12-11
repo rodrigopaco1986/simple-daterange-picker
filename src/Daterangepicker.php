@@ -20,9 +20,13 @@ class Daterangepicker extends Filter
         private string $default = Helper::TODAY,
         private string $orderByColumn = 'id',
         private string $orderByDir = 'asc',
+        public $name = '',
     ) {
         //Often date range components use as default date the past dates
         $this->maxDate = Carbon::today();
+        if ($name) {
+            $this->name = $name;
+        }
     }
 
     /**
