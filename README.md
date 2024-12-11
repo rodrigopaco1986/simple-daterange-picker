@@ -52,6 +52,25 @@ public function filters(Request $request)
 }
 ```
 
+You can also change the filter's label.
+
+```php
+use Rpj\Daterangepicker\Daterangepicker;
+use Rpj\Daterangepicker\DateHelper;
+use Carbon\Carbon;
+
+public function filters(Request $request)
+{
+    return [
+        (new Daterangepicker(
+            'users.created_at',
+            name: 'Filter by Date',
+        ))
+    ];
+}
+
+```
+
 Finally, we have added the option to set a custom pre set dates using Carbon class. Also you can set a min and max date for the date range component.
 
 ```php
